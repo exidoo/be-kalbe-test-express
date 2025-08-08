@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "npx prisma generate"
+    "postinstall": "npx prisma generate",
+    "seed": "npx prisma db seed"
   },
   "author": "romi",
   "license": "ISC",
@@ -20,5 +21,8 @@
   "devDependencies": {
     "@prisma/client": "^6.13.0",
     "prisma": "^6.13.0"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }
