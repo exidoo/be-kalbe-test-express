@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user_management {
+  id          Int      @id @default(autoincrement())
+  username    String   @unique
+  email       String?  @unique
+  password    String
+  full_name   String?
+  role        String?
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  createdParams   m_ca_parameters[]   @relation("CreatedParams")
+  updatedParams   m_ca_parameters[]   @relation("UpdatedParams")
+  createdMethods  m_ca_methods[]      @relation("CreatedMethods")
+  updatedMethods  m_ca_methods[]      @relation("UpdatedMethods")
+  createdSamples  m_ca_sample_types[] @relation("CreatedSamples")
+  updatedSamples  m_ca_sample_types[] @relation("UpdatedSamples")
+  createdAnalyses m_ca_analyses[]     @relation("CreatedAnalyses")
+  updatedAnalyses m_ca_analyses[]     @relation("UpdatedAnalyses")
+}
+
+model m_ca_parameters {
+  id              Int              @id @default(autoincrement())
+  created_by_id   Int?
+  created_on      DateTime?
+  last_updated_by_id Int?
+  last_updated_on DateTime?
+  is_active       Boolean?
+  code            String?
+  description     String?
+
+  analyses        m_ca_analyses[]
+
+  created_by      user_management? @relation("CreatedParams", fields: [created_by_id], references: [id])
+  last_updated_by user_management? @relation("UpdatedParams", fields: [last_updated_by_id], references: [id])
+}
+
+model m_ca_methods {
+  id              Int              @id @default(autoincrement())
+  created_by_id   Int?
+  created_on      DateTime?
+  last_updated_by_id Int?
+  last_updated_on DateTime?
+  is_active       Boolean?
+  code            String?
+  description     String?
+
+  analyses        m_ca_analyses[]
+
+  created_by      user_management? @relation("CreatedMethods", fields: [created_by_id], references: [id])
+  last_updated_by user_management? @relation("UpdatedMethods", fields: [last_updated_by_id], references: [id])
+}
+
+model m_ca_sample_types {
+  id              Int              @id @default(autoincrement())
+  created_by_id   Int?
+  created_on      DateTime?
+  last_updated_by_id Int?
+  last_updated_on DateTime?
+  is_active       Boolean?
+  code            String?
+  description     String?
+
+  analyses        m_ca_analyses[]
+
+  created_by      user_management? @relation("CreatedSamples", fields: [created_by_id], references: [id])
+  last_updated_by user_management? @relation("UpdatedSamples", fields: [last_updated_by_id], references: [id])
+}
+
+model m_ca_analyses {
+  id              Int              @id @default(autoincrement())
+  created_by_id   Int?
+  created_on      DateTime?
+  last_updated_by_id Int?
+  last_updated_on DateTime?
+  is_active       Boolean?
+  code            String?
+  description     String?
+  lead_time       Int?
+
+  parameter_id    Int
+  method_id       Int
+  sample_type_id  Int
+
+  parameter       m_ca_parameters   @relation(fields: [parameter_id], references: [id])
+  method          m_ca_methods      @relation(fields: [method_id], references: [id])
+  sample_type     m_ca_sample_types @relation(fields: [sample_type_id], references: [id])
+
+  created_by      user_management?  @relation("CreatedAnalyses", fields: [created_by_id], references: [id])
+  last_updated_by user_management?  @relation("UpdatedAnalyses", fields: [last_updated_by_id], references: [id])
+}
