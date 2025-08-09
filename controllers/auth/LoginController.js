@@ -1,4 +1,4 @@
-//import express
+// Import express
 const express = require('express');
 
 // Import validationResult from express-validator
@@ -28,10 +28,10 @@ const login = async (req, res) => {
   }
 
   try {
-    //find user
-    const user = await prisma.user_management.findFirst({
+    // ✅ Gunakan findUnique untuk mencari user berdasarkan username
+    const user = await prisma.user_management.findUnique({
       where: {
-        email: req.body.email,
+        username: req.body.username,
       },
       select: {
         id: true,
@@ -41,28 +41,35 @@ const login = async (req, res) => {
         full_name: true,
         role: true,
       },
-    }); //user not found
+    });
 
-    if (!user)
+    //user not found
+    if (!user) {
       return res.status(404).json({
         success: false,
         message: 'User not found',
-      }); //compare password
+      });
+    }
 
+    //compare password
     const validPassword = await bcrypt.compare(req.body.password, user.password); //password incorrect
 
-    if (!validPassword)
+    if (!validPassword) {
       return res.status(401).json({
         success: false,
         message: 'Invalid password',
-      }); //generate token JWT
+      });
+    }
 
+    //generate token JWT
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
       expiresIn: '16h',
-    }); // Destructure to remove password from user object
+    });
 
-    const { password, ...userWithoutPassword } = user; //return response
+    // Destructure to remove password from user object
+    const { password, ...userWithoutPassword } = user;
 
+    //return response
     res.status(200).send({
       success: true,
       message: 'Login successfully',
@@ -72,6 +79,7 @@ const login = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error(error); // Tambahkan log untuk melihat error yang sebenarnya
     res.status(500).send({
       success: false,
       message: 'Internal server error',

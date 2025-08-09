@@ -30,10 +30,6 @@ const validateRegister = [
     }),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
   body('full_name').optional().isString().withMessage('Full name must be a string'),
-  body('role')
-    .optional()
-    .isIn(['ADMIN', 'ANALYST', 'USER']) // Sesuaikan jika ada role lain
-    .withMessage('Role must be one of: ADMIN, ANALYST, USER'),
 ];
 
 // Validasi untuk login
