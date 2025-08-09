@@ -8,7 +8,7 @@ const createAnalysisValidator = [
   body('parameter_id').notEmpty().withMessage('Parameter ID is required').isInt().withMessage('Parameter ID must be an integer'),
   body('method_id').notEmpty().withMessage('Method ID is required').isInt().withMessage('Method ID must be an integer'),
   body('sample_type_id').notEmpty().withMessage('Sample type ID is required').isInt().withMessage('Sample type ID must be an integer'),
-  body('created_by_id').notEmpty().withMessage('Created by ID is required').isInt().withMessage('Created by ID must be an integer'),
+  // body('created_by_id').notEmpty().withMessage('Created by ID is required').isInt().withMessage('Created by ID must be an integer'),
 ];
 
 const updateAnalysisValidator = [
@@ -19,7 +19,7 @@ const updateAnalysisValidator = [
   body('method_id').optional().isInt().withMessage('Method ID must be an integer'),
   body('sample_type_id').optional().isInt().withMessage('Sample type ID must be an integer'),
   body('is_active').optional().isBoolean().withMessage('Is active must be a boolean'),
-  body('last_updated_by_id').notEmpty().withMessage('Last updated by ID is required').isInt().withMessage('Last updated by ID must be an integer'),
+  // body('last_updated_by_id').notEmpty().withMessage('Last updated by ID is required').isInt().withMessage('Last updated by ID must be an integer'),
 ];
 
 module.exports = {

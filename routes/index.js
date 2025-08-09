@@ -34,32 +34,32 @@ router.post('/register', validateRegister, registerController.register);
 router.post('/login', validateLogin, loginController.login);
 
 // Parameter Routes
-router.post('/parameters', verifyToken, createParameterValidator, parameterController.createParameter);
-router.get('/parameters', verifyToken, parameterController.getAllParameters);
-router.get('/parameters/:id', verifyToken, parameterController.getParameterById);
-router.put('/parameters/:id', verifyToken, updateParameterValidator, parameterController.updateParameter);
-router.delete('/parameters/:id', verifyToken, parameterController.deleteParameter);
+router.post('/parameters', createParameterValidator, parameterController.createParameter);
+router.get('/parameters', parameterController.getAllParameters);
+router.get('/parameters/:id', parameterController.getParameterById);
+router.put('/parameters/:id', updateParameterValidator, parameterController.updateParameter);
+router.delete('/parameters/:id', parameterController.deleteParameter);
 
 // Method Routes
-router.post('/methods', verifyToken, createMethodValidator, methodController.createMethod);
-router.get('/methods', verifyToken, methodController.getAllMethods);
-router.get('/methods/:id', verifyToken, methodController.getMethodById);
-router.put('/methods/:id', verifyToken, updateMethodValidator, methodController.updateMethod);
-router.delete('/methods/:id', verifyToken, methodController.deleteMethod);
+router.post('/methods', createMethodValidator, methodController.createMethod);
+router.get('/methods', methodController.getAllMethods);
+router.get('/methods/:id', methodController.getMethodById);
+router.put('/methods/:id', updateMethodValidator, methodController.updateMethod);
+router.delete('/methods/:id', methodController.deleteMethod);
 
 // Sample Routes
-router.post('/samples', verifyToken, createSampleTypeValidator, sampleController.createSampleType);
-router.get('/samples', verifyToken, sampleController.getAllSampleTypes);
-router.get('/samples/:id', verifyToken, sampleController.getSampleTypeById);
-router.put('/samples/:id', verifyToken, updateSampleTypeValidator, sampleController.updateSampleType);
-router.delete('/samples/:id', verifyToken, sampleController.deleteSampleType);
+router.post('/samples', createSampleTypeValidator, sampleController.createSampleType);
+router.get('/samples', sampleController.getAllSampleTypes);
+router.get('/samples/:id', sampleController.getSampleTypeById);
+router.put('/samples/:id', updateSampleTypeValidator, sampleController.updateSampleType);
+router.delete('/samples/:id', sampleController.deleteSampleType);
 
 // Analys Routes
-router.post('/analyses', verifyToken, createAnalysisValidator, analysesController.createAnalysis);
-router.get('/analyses', verifyToken, analysesController.getAllAnalyses);
-router.get('/analyses/:id', verifyToken, analysesController.getAnalysisById);
-router.put('/analyses/:id', verifyToken, updateAnalysisValidator, analysesController.updateAnalysis);
-router.delete('/analyses/:id', verifyToken, analysesController.deleteAnalysis);
+router.post('/analyses', createAnalysisValidator, analysesController.createAnalysis);
+router.get('/analyses', analysesController.getAllAnalyses);
+router.get('/analyses/:id', analysesController.getAnalysisById);
+router.put('/analyses/:id', updateAnalysisValidator, analysesController.updateAnalysis);
+router.delete('/analyses/:id', analysesController.deleteAnalysis);
 
 //export router
 module.exports = router;
